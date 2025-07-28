@@ -1,0 +1,35 @@
+steps:
+  # Step 1: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest',
+        '.'
+      ]
+
+  # Step 2: Push Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest',
+      ]
+
+  # Step 3: (Optional) Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      [
+        'run',
+        'deploy',
+        'eventarc-app-cloudrun-service',
+        'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest',
+        '--region=us-east1',
+        '--platform=managed',
+        '--allow-unauthenticated'
+      ]
+
+images:
+  - 'us-east1-docker.pkg.dev/$PROJECT_ID/YOUR_REPO_NAME/YOUR_IMAGE_NAME:latest'
