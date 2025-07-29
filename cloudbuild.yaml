@@ -23,6 +23,18 @@ steps:
         'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest',
       ]
 
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      [
+        'run', 'deploy', 'eventarc-app-cloudrun-service',
+        '--image', 'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest',
+        '--region', 'us-east1',
+        '--platform', 'managed',
+        '--allow-unauthenticated'
+      ]
+
 images:
   - 'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest'
 
