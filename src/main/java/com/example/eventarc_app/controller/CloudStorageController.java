@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tmsgis/loader")
-public class LoaderController {
+@RequestMapping("/example/cloudstorage")
+public class CloudStorageController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoaderController.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(CloudStorageController.class.getName());
 
     // for intercepting events from cloud storage
-    @PostMapping("/process")
-    public void processFile(@RequestBody String jsonData) throws InvalidProtocolBufferException {
+    @PostMapping("/event")
+    public void processCloudStorageEvent(@RequestBody String jsonData) throws InvalidProtocolBufferException {
         logger.info("Cloud Storage Event Start");
         StorageObjectData.Builder builder = StorageObjectData.newBuilder();
         JsonFormat.parser().merge(jsonData, builder);
