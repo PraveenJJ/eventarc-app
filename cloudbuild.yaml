@@ -1,8 +1,9 @@
 steps:
   # Step 0: Run Maven to build the JAR
-  - name: 'gcr.io/cloud-builders/mvn'
+  - name: 'docker.io/library/maven:3.9.6-eclipse-temurin-21'
+    entrypoint: 'mvn'
     args: ['clean', 'package']
-    dir: '.'  # Optional, set to your app directory if not root
+    dir: '.'  # or path to your app folder
 
   # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
