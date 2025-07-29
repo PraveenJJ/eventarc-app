@@ -1,4 +1,9 @@
 steps:
+  # Step 0: Run Maven to build the JAR
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: ['clean', 'package']
+    dir: '.'  # Optional, set to your app directory if not root
+
   # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args:
@@ -18,4 +23,7 @@ steps:
       ]
 
 images:
-  - 'us-east1-docker.pkg.dev/$PROJECT_ID/YOUR_REPO_NAME/YOUR_IMAGE_NAME:latest'
+  - 'us-east1-docker.pkg.dev/hallowed-valve-466712-m0/eventarc-app-docker-repo/eventarc-app:latest'
+
+# ✅ Explicitly define default logging
+logging: CLOUD_LOGGING_ONLY
